@@ -35,12 +35,9 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative min-h-screen bg-black overflow-hidden text-white">
+    <main className="relative min-h-screen bg-[#05070f] text-white overflow-hidden">
 
-      {/* BACKGROUND GLOW */}
-      <div className="absolute inset-0 bg-gradient-radial from-white/5 via-transparent to-transparent opacity-40" />
-
-      {/* FLOATING ORBS */}
+      {/* ORBS */}
       {orbs.map((orb, i) => (
         <div
           key={i}
@@ -55,70 +52,97 @@ export default function Home() {
         />
       ))}
 
-      {/* VIGNETTE */}
-      <div className="pointer-events-none absolute inset-0 bg-black/50" />
+      {/* GRADIENT GLOW */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(0,150,255,0.15),transparent_60%)]" />
 
-      {/* CONTENT */}
-      <div className="relative z-10 flex flex-col items-center px-6">
-
-        {/* HERO */}
-        <section className="flex flex-col items-center justify-center min-h-screen text-center">
-          <h1 className="text-[90px] md:text-[130px] font-semibold tracking-tight">
-            Axiom
-          </h1>
-          <p className="mt-4 text-lg text-gray-400">
-            I code random things.
-          </p>
-        </section>
-
-        {/* INFO GRID */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full py-20">
-
-          <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-xl">
-            <h3 className="text-xl font-semibold">About Me</h3>
-            <p className="text-gray-400 mt-2">
-              I build experimental projects, explore ideas, and create smooth digital experiences.
-            </p>
-          </div>
-
-          <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-xl">
-            <h3 className="text-xl font-semibold">Focus</h3>
-            <p className="text-gray-400 mt-2">
-              Performance, simplicity, and making things feel right.
-            </p>
-          </div>
-
-          <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-xl">
-            <h3 className="text-xl font-semibold">Style</h3>
-            <p className="text-gray-400 mt-2">
-              Smooth. Fast. Experimental. Always improving.
-            </p>
-          </div>
-
-        </section>
-
-        {/* BUTTONS */}
-        <section className="flex gap-6 pb-32 flex-wrap justify-center">
-
-          <a
-            href="https://discord.gg/jPsWy2gsRj"
-            target="_blank"
-            className="px-8 py-3 bg-white text-black rounded-full font-semibold hover:scale-105 transition"
-          >
-            Join Discord
-          </a>
-
-          <a
-            href="https://www.youtube.com/@EnvAxiom"
-            target="_blank"
-            className="px-8 py-3 border border-white/20 rounded-full hover:bg-white/10 transition"
-          >
-            YouTube
-          </a>
-
-        </section>
-
+      {/* NAV */}
+      <div className="relative z-10 flex justify-between items-center px-8 py-6 max-w-6xl mx-auto">
+        <h1 className="font-semibold text-lg tracking-wide">AXIOM</h1>
+        <div className="flex gap-6 text-sm text-gray-400">
+          <span>Projects</span>
+          <span>About</span>
+          <span>Contact</span>
+        </div>
       </div>
+
+      {/* HERO */}
+      <section className="relative z-10 max-w-6xl mx-auto px-8 py-20 grid md:grid-cols-2 gap-12 items-center">
+
+        {/* LEFT TEXT */}
+        <div>
+          <h1 className="text-5xl md:text-7xl font-bold leading-tight">
+            I build things<br />
+            <span className="text-cyan-400">that feel right.</span>
+          </h1>
+
+          <p className="mt-6 text-gray-400 max-w-md">
+            Experimental coding, smooth interfaces, and clean digital experiences.
+          </p>
+
+          <div className="flex gap-4 mt-8">
+            <a
+              href="https://discord.gg/jPsWy2gsRj"
+              target="_blank"
+              className="px-6 py-3 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-lg text-black font-semibold hover:scale-105 transition"
+            >
+              Join Discord
+            </a>
+
+            <a
+              href="https://www.youtube.com/@EnvAxiom"
+              target="_blank"
+              className="px-6 py-3 border border-white/20 rounded-lg hover:bg-white/10 transition"
+            >
+              YouTube
+            </a>
+          </div>
+        </div>
+
+        {/* RIGHT CARD */}
+        <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl p-6 shadow-lg">
+          <h3 className="text-xl font-semibold mb-4">What I do</h3>
+
+          <ul className="text-gray-400 space-y-2">
+            <li>• Web projects</li>
+            <li>• UI / UX experiments</li>
+            <li>• Automation & tools</li>
+            <li>• Random builds</li>
+          </ul>
+        </div>
+
+      </section>
+
+      {/* SERVICES */}
+      <section className="relative z-10 max-w-6xl mx-auto px-8 py-20">
+
+        <h2 className="text-3xl font-semibold mb-10">What I build</h2>
+
+        <div className="grid md:grid-cols-3 gap-6">
+
+          <div className="bg-white/5 border border-white/10 rounded-xl p-6 backdrop-blur-lg hover:scale-[1.02] transition">
+            <h3 className="text-lg font-semibold mb-2">Websites</h3>
+            <p className="text-gray-400 text-sm">
+              Clean, fast, and modern designs.
+            </p>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-xl p-6 backdrop-blur-lg hover:scale-[1.02] transition">
+            <h3 className="text-lg font-semibold mb-2">Tools</h3>
+            <p className="text-gray-400 text-sm">
+              Automation and experimental builds.
+            </p>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-xl p-6 backdrop-blur-lg hover:scale-[1.02] transition">
+            <h3 className="text-lg font-semibold mb-2">Experiments</h3>
+            <p className="text-gray-400 text-sm">
+              Random ideas turned into reality.
+            </p>
+          </div>
+
+        </div>
+
+      </section>
 
     </main>
   );
