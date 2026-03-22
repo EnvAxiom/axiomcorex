@@ -1,20 +1,15 @@
-"use client";
+import "./globals.css";
 
-import { useEffect } from "react";
-import Lenis from "@studio-freight/lenis";
+export const metadata = {
+  title: "AxiomCorex",
+  description: "Built by EnvAxiom",
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  useEffect(() => {
-    const lenis = new Lenis();
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-  }, []);
-
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>{children}</body>

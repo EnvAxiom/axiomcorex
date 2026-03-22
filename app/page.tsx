@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Home() {
   const [orbs, setOrbs] = useState<any[]>([]);
@@ -9,11 +9,11 @@ export default function Home() {
 
   // Generate orbs
   useEffect(() => {
-    const generated = Array.from({ length: 40 }).map(() => ({
+    const generated = Array.from({ length: 30 }).map(() => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
-      size: Math.random() * 4 + 1,
-      speed: Math.random() * 0.4 + 0.1,
+      size: Math.random() * 5 + 2,
+      speed: Math.random() * 0.3 + 0.1,
     }));
     setOrbs(generated);
   }, []);
@@ -49,9 +49,6 @@ export default function Home() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-black text-white">
 
-      {/* SOFT GRADIENT BACK */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-gray-900 opacity-80" />
-
       {/* FLOATING ORBS */}
       {orbs.map((orb, i) => (
         <div
@@ -79,7 +76,7 @@ export default function Home() {
       <section className="relative z-10 h-screen flex flex-col items-center justify-center text-center px-6">
         
         <motion.h1
-          initial={{ opacity: 0, y: 80 }}
+          initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
           className="text-6xl md:text-8xl font-bold tracking-tight"
@@ -90,7 +87,7 @@ export default function Home() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
+          transition={{ delay: 0.5 }}
           className="mt-6 text-gray-400 text-lg max-w-xl"
         >
           Built by EnvAxiom. I design smooth, fast, and clean digital experiences.
@@ -101,7 +98,7 @@ export default function Home() {
       {/* SECTION */}
       <section className="relative z-10 h-screen flex items-center justify-center px-6">
         <motion.div
-          initial={{ opacity: 0, y: 100 }}
+          initial={{ opacity: 0, y: 80 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
           className="text-3xl md:text-5xl text-center max-w-3xl"
