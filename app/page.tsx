@@ -1,19 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 
 export default function Home() {
   const [orbs, setOrbs] = useState<any[]>([]);
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
 
-  // ORBS
   useEffect(() => {
-    const generated = Array.from({ length: 35 }).map(() => ({
+    const generated = Array.from({ length: 60 }).map(() => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
       size: Math.random() * 3 + 1,
-      speed: Math.random() * 0.3 + 0.1,
+      speed: Math.random() * 0.2 + 0.05,
+      opacity: Math.random() * 0.4 + 0.1,
     }));
     setOrbs(generated);
   }, []);
@@ -24,7 +22,7 @@ export default function Home() {
         prev.map((orb) => ({
           ...orb,
           y: orb.y - orb.speed,
-          x: orb.x + Math.sin(orb.y * 0.01) * 0.4,
+          x: orb.x + Math.sin(orb.y * 0.01) * 0.3,
           ...(orb.y < 0 && {
             y: window.innerHeight,
             x: Math.random() * window.innerWidth,
@@ -36,107 +34,91 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  // CURSOR
-  useEffect(() => {
-    const move = (e: MouseEvent) => {
-      setMouse({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
-  }, []);
-
   return (
-    <main className="relative min-h-screen bg-black text-white overflow-hidden">
+    <main className="relative min-h-screen bg-black overflow-hidden text-white">
 
-      {/* ORBS */}
+      {/* BACKGROUND GLOW */}
+      <div className="absolute inset-0 bg-gradient-radial from-white/5 via-transparent to-transparent opacity-40" />
+
+      {/* FLOATING ORBS */}
       {orbs.map((orb, i) => (
         <div
           key={i}
-          className="fixed rounded-full bg-white opacity-30 blur-md pointer-events-none"
+          className="fixed rounded-full bg-white blur-[6px] pointer-events-none"
           style={{
             left: orb.x,
             top: orb.y,
             width: orb.size,
             height: orb.size,
+            opacity: orb.opacity,
           }}
         />
       ))}
 
-      {/* CURSOR GLOW */}
-      <div
-        className="fixed w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none"
-        style={{
-          left: mouse.x - 200,
-          top: mouse.y - 200,
-        }}
-      />
+      {/* VIGNETTE */}
+      <div className="pointer-events-none absolute inset-0 bg-black/50" />
 
-      {/* HERO */}
-      <section className="h-screen flex flex-col items-center justify-center text-center px-6">
+      {/* CONTENT */}
+      <div className="relative z-10 flex flex-col items-center px-6">
 
-        <motion.h1
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="text-[90px] md:text-[140px] font-bold tracking-tight leading-none"
-        >
-          Axiom
-        </motion.h1>
+        {/* HERO */}
+        <section className="flex flex-col items-center justify-center min-h-screen text-center">
+          <h1 className="text-[90px] md:text-[130px] font-semibold tracking-tight">
+            Axiom
+          </h1>
+          <p className="mt-4 text-lg text-gray-400">
+            I code random things.
+          </p>
+        </section>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="mt-6 text-xl text-gray-400"
-        >
-          I code random things.
-        </motion.p>
+        {/* INFO GRID */}
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full py-20">
 
-      </section>
+          <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-xl">
+            <h3 className="text-xl font-semibold">About Me</h3>
+            <p className="text-gray-400 mt-2">
+              I build experimental projects, explore ideas, and create smooth digital experiences.
+            </p>
+          </div>
 
-      {/* STORY FLOW (storm style) */}
-      <section className="flex flex-col items-center justify-center text-center px-6 py-32 gap-24">
+          <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-xl">
+            <h3 className="text-xl font-semibold">Focus</h3>
+            <p className="text-gray-400 mt-2">
+              Performance, simplicity, and making things feel right.
+            </p>
+          </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="text-4xl md:text-6xl max-w-3xl"
-        >
-          I don’t follow templates.
-        </motion.div>
+          <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-xl">
+            <h3 className="text-xl font-semibold">Style</h3>
+            <p className="text-gray-400 mt-2">
+              Smooth. Fast. Experimental. Always improving.
+            </p>
+          </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="text-4xl md:text-6xl max-w-3xl"
-        >
-          I build what I want.
-        </motion.div>
+        </section>
 
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="text-3xl md:text-5xl text-gray-400 max-w-2xl"
-        >
-          Smooth. Fast. Experimental.
-        </motion.div>
+        {/* BUTTONS */}
+        <section className="flex gap-6 pb-32 flex-wrap justify-center">
 
-      </section>
+          <a
+            href="https://discord.gg/jPsWy2gsRj"
+            target="_blank"
+            className="px-8 py-3 bg-white text-black rounded-full font-semibold hover:scale-105 transition"
+          >
+            Join Discord
+          </a>
 
-      {/* FINAL */}
-      <section className="h-screen flex items-center justify-center text-center px-6">
-        <motion.h2
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="text-5xl md:text-7xl font-bold"
-        >
-          Let’s build something different.
-        </motion.h2>
-      </section>
+          <a
+            href="https://www.youtube.com/@EnvAxiom"
+            target="_blank"
+            className="px-8 py-3 border border-white/20 rounded-full hover:bg-white/10 transition"
+          >
+            YouTube
+          </a>
+
+        </section>
+
+      </div>
 
     </main>
   );
