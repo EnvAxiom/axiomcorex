@@ -3,25 +3,27 @@
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [stars, setStars] = useState<any[]>([]);
+  const [orbs, setOrbs] = useState<any[]>([]);
 
   useEffect(() => {
-    const generated = Array.from({ length: 120 }).map(() => ({
+    const generated = Array.from({ length: 80 }).map(() => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
-      size: Math.random() * 2 + 1,
-      speed: Math.random() * 0.3 + 0.1,
+      size: Math.random() * 3 + 1,
+      speed: Math.random() * 0.25 + 0.05,
+      opacity: Math.random() * 0.5 + 0.2,
     }));
-    setStars(generated);
+    setOrbs(generated);
   }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setStars((prev) =>
-        prev.map((s) => ({
-          ...s,
-          y: s.y - s.speed,
-          ...(s.y < 0 && {
+      setOrbs((prev) =>
+        prev.map((orb) => ({
+          ...orb,
+          y: orb.y - orb.speed,
+          x: orb.x + Math.sin(orb.y * 0.01) * 0.4,
+          ...(orb.y < 0 && {
             y: window.innerHeight,
             x: Math.random() * window.innerWidth,
           }),
@@ -33,93 +35,77 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative min-h-screen bg-black text-green-400 overflow-hidden font-mono">
+    <main className="relative min-h-screen bg-black text-white overflow-hidden flex items-center justify-center">
 
-      {/* MATRIX BACKGROUND */}
-      <div className="absolute inset-0 opacity-10 text-green-500 text-xs leading-3 whitespace-pre pointer-events-none">
-        {Array(200).fill("1010101010101010101010101010101010101010").join("\n")}
-      </div>
-
-      {/* STARS */}
-      {stars.map((s, i) => (
+      {/* FLOATING ORBS */}
+      {orbs.map((orb, i) => (
         <div
           key={i}
-          className="fixed bg-white rounded-full"
+          className="fixed rounded-full bg-white blur-[6px] pointer-events-none"
           style={{
-            left: s.x,
-            top: s.y,
-            width: s.size,
-            height: s.size,
-            opacity: 0.8,
+            left: orb.x,
+            top: orb.y,
+            width: orb.size,
+            height: orb.size,
+            opacity: orb.opacity,
           }}
         />
       ))}
 
-      {/* TOP LEFT */}
-      <div className="absolute top-6 left-6 space-y-3">
-        <button className="bg-green-500 text-black px-4 py-1 rounded-md text-sm">
-          🌙 Dark Mode
-        </button>
+      {/* CONTENT */}
+      <div className="relative z-10 text-center flex flex-col items-center">
 
-        <button className="bg-green-500 text-black px-4 py-1 rounded-md text-sm">
-          ABOUT ME
-        </button>
-      </div>
-
-      {/* PROFILE */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center">
-
-        <h1 className="text-4xl md:text-6xl font-bold tracking-wide drop-shadow-[0_0_10px_#00ff00]">
+        {/* NAME */}
+        <h1 className="text-5xl md:text-7xl font-bold tracking-wide">
           Axiom
         </h1>
 
-        <p className="mt-2 text-blue-400">
+        <p className="mt-2 text-gray-400">
           discord: axiomkrd
         </p>
 
-        <p className="mt-6 text-2xl text-green-400">
+        <p className="mt-6 text-xl text-gray-300">
           coder | experimental | builder
         </p>
 
-        {/* BUTTON STACK */}
+        {/* BUTTONS */}
         <div className="flex flex-col gap-4 mt-10 w-[280px]">
 
           {/* DISCORD */}
           <a
             href="https://discord.gg/jPsWy2gsRj"
             target="_blank"
-            className="bg-indigo-500 hover:scale-105 transition text-white py-3 rounded-md flex items-center justify-center gap-2"
+            className="bg-indigo-500 hover:scale-105 transition text-white py-3 rounded-md flex items-center justify-center gap-2 shadow-lg"
           >
-            🎮 Axiom's Discord Server
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.317 4.369A19.791 19.791 0 0 0 16.885 3c-.161.29-.349.676-.478.978a18.27 18.27 0 0 0-5.814 0 9.955 9.955 0 0 0-.485-.978 19.736 19.736 0 0 0-3.436 1.369C3.773 9.045 2.98 13.579 3.36 18.049a19.9 19.9 0 0 0 5.993 3.03Z"/>
+            </svg>
+            Discord Server
           </a>
 
           {/* YOUTUBE */}
           <a
             href="https://www.youtube.com/@EnvAxiom"
             target="_blank"
-            className="bg-red-500 hover:scale-105 transition text-white py-3 rounded-md flex items-center justify-center gap-2"
+            className="bg-red-500 hover:scale-105 transition text-white py-3 rounded-md flex items-center justify-center gap-2 shadow-lg"
           >
-            ▶ Axiom's YouTube Channel
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.5 6.2a2.9 2.9 0 0 0-2-2.05C19.8 3.6 12 3.6 12 3.6s-7.8 0-9.5.55a2.9 2.9 0 0 0-2 2.05A30.4 30.4 0 0 0 0 12a30.4 30.4 0 0 0 .5 5.8 2.9 2.9 0 0 0 2 2.05Z"/>
+            </svg>
+            YouTube Channel
           </a>
 
-          {/* EXTRA */}
-          <button className="bg-gray-700 hover:scale-105 transition py-3 rounded-md">
-            ◻ Axiom's Projects
+          {/* EXTRA BUTTONS */}
+          <button className="bg-white/10 hover:bg-white/20 transition py-3 rounded-md">
+            Projects
           </button>
 
-          <button className="bg-gray-800 hover:scale-105 transition py-3 rounded-md">
-            ◉ Axiom's Experiments
+          <button className="bg-white/10 hover:bg-white/20 transition py-3 rounded-md">
+            Experiments
           </button>
 
         </div>
 
-      </div>
-
-      {/* BOTTOM PLAYER MOCK */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 bg-green-900/30 backdrop-blur-md px-6 py-3 rounded-xl flex items-center gap-4 border border-green-500/20">
-        <span>▶</span>
-        <span className="text-sm">0:00 / 2:42</span>
-        <span className="text-sm">50%</span>
       </div>
 
     </main>
