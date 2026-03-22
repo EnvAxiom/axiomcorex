@@ -7,13 +7,13 @@ export default function Home() {
   const [orbs, setOrbs] = useState<any[]>([]);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
 
-  // Generate floating orbs
+  // Generate orbs
   useEffect(() => {
-    const generated = Array.from({ length: 25 }).map(() => ({
+    const generated = Array.from({ length: 40 }).map(() => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
-      size: Math.random() * 6 + 2,
-      speed: Math.random() * 0.3 + 0.1,
+      size: Math.random() * 4 + 1,
+      speed: Math.random() * 0.4 + 0.1,
     }));
     setOrbs(generated);
   }, []);
@@ -47,13 +47,16 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="bg-black text-white min-h-screen overflow-hidden relative">
+    <main className="relative min-h-screen overflow-hidden bg-black text-white">
+
+      {/* SOFT GRADIENT BACK */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-gray-900 opacity-80" />
 
       {/* FLOATING ORBS */}
       {orbs.map((orb, i) => (
         <div
           key={i}
-          className="fixed rounded-full bg-white blur-sm opacity-70 pointer-events-none"
+          className="fixed rounded-full bg-white opacity-40 blur-md pointer-events-none"
           style={{
             left: orb.x,
             top: orb.y,
@@ -63,17 +66,17 @@ export default function Home() {
         />
       ))}
 
-      {/* GLOW CURSOR */}
+      {/* CURSOR GLOW */}
       <div
-        className="fixed w-40 h-40 bg-white/10 rounded-full blur-3xl pointer-events-none"
+        className="fixed w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none"
         style={{
-          left: mouse.x - 80,
-          top: mouse.y - 80,
+          left: mouse.x - 120,
+          top: mouse.y - 120,
         }}
       />
 
       {/* HERO */}
-      <section className="h-screen flex flex-col items-center justify-center text-center px-6 relative z-10">
+      <section className="relative z-10 h-screen flex flex-col items-center justify-center text-center px-6">
         
         <motion.h1
           initial={{ opacity: 0, y: 80 }}
@@ -96,7 +99,7 @@ export default function Home() {
       </section>
 
       {/* SECTION */}
-      <section className="h-screen flex items-center justify-center px-6 relative z-10">
+      <section className="relative z-10 h-screen flex items-center justify-center px-6">
         <motion.div
           initial={{ opacity: 0, y: 100 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -108,7 +111,7 @@ export default function Home() {
       </section>
 
       {/* FINAL */}
-      <section className="h-screen flex items-center justify-center relative z-10">
+      <section className="relative z-10 h-screen flex items-center justify-center">
         <motion.h2
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
